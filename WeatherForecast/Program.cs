@@ -1,6 +1,19 @@
+using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication().AddJwtBearer(opt =>
+{
+    opt.Authority = "https://localhost:4999";
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = false
+    };
+    opt.RequireHttpsMetadata = false;
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -8,10 +21,14 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
 
 app.MapGet("/weatherforecast", () =>
 {
@@ -24,7 +41,7 @@ app.MapGet("/weatherforecast", () =>
         ))
         .ToArray();
     return forecast;
-});
+}).RequireAuthorization();
 
 app.Run();
 

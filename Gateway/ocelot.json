@@ -1,6 +1,20 @@
 {
   "Routes": [
     {
+      // 1. Token alma rotası (Genelde herkese açık, sınırlar firewall veya vpn cihazlarıyla sağlanır):
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 4999
+        }
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/connect/token", // İstek
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/auth/token" // Yönlendir
+    },
+    {
+      // 2. Koprumalı kaynak erişimi (Token Gerektirir)
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -10,7 +24,11 @@
       "DownstreamScheme": "https",
       "DownstreamPathTemplate": "/weatherforecast",
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/local/weatherforecast"
+      "UpstreamPathTemplate": "/local/weather",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamHostAndPorts": [
