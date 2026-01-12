@@ -1,0 +1,67 @@
+{
+  "Routes": [
+    {
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/weatherforecast",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/local/weatherforecast"
+    },
+    {
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7027
+        }
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/local/hello"
+    },
+    {
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "api.ibb.gov.tr",
+          "Port": 443
+        }
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/ispark/park",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/ext/otoparklar"
+    },
+    {
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "api.ibb.gov.tr",
+          "Port": 443
+        }
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/ispark/parkDetay?id={id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/ext/otoparklar/{id}"
+    },
+    {
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "data.ibb.gov.tr",
+          "Port": 443
+        }
+      ],
+      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/dataset/a9f0312e-654f-49ff-ae31-cd5cb9a40822/resource/775c0631-a67d-4f12-af41-61ae32f0ffe7/download/sahiplendirilenhayvanlar.xml",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/ext/hayvanlar"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5000"
+  }
+}
